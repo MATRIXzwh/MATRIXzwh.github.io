@@ -124,23 +124,28 @@
 
 </body></html>
     <div class="footer" id="footer">
-    <p><h4>版权所有 © 2020 | 作者: zwhMatrix | 主题 By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder" style="font-size:14px; color: #969696">Coder</a></h4>
-    
+    <p>
+        <h4>版权所有 © 2020 | 作者: zwhMatrix |
+            主题 By <a class="theme-author" target="_blank" rel="noopener" href="https://github.com/Xunzhuo/hexo-theme-coder"
+                style="font-size:14px; color: #969696">Coder</a></h4>
+        
         <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
-        <span id="busuanzi_container_site_pv">本站浏览总访问量: <span id="busuanzi_value_site_pv"></span></span>
+        <span id="busuanzi_container_site_pv">本站浏览总访问量: <span
+                id="busuanzi_value_site_pv"></span></span>
         <span class="post-meta-divider">|</span>
-        <span id="busuanzi_container_site_uv">本站访问人数: <span id="busuanzi_value_site_uv"></span></span>
-    
-    <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
-        <input type="checkbox" name="switch" id="update_style">
-        <span class="el-switch-style"></span>
-    </label>
+        <span id="busuanzi_container_site_uv">本站访问人数: <span
+                id="busuanzi_value_site_uv"></span></span>
+        
+        <label class="el-switch el-switch-blue el-switch-sm" style="vertical-align: sub;">
+            <input type="checkbox" name="switch" id="update_style">
+            <span class="el-switch-style"></span>
+        </label>
 
-    <!--         <script type="text/javascript">
+        <!--         <script type="text/javascript">
     var cnzz_protocol = (("https:" == document.location.protocol) ? "https://" : "http://");
     document.write(unescape("%3Cspan id='cnzz_stat_icon_1278548644'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "v1.cnzz.com/stat.php%3Fid%3D1278548644%26show%3Dpic1' type='text/javascript'%3E%3C/script%3E"));
     </script> -->
-</p>
+    </p>
 </div>
 
 <input type="hidden" id="web_style" value="black">
@@ -157,25 +162,72 @@
 <script src="/js/js.js"></script>
 
 <style type="text/css">
-.v * {
-color: #698fca;
-}
-.v .vlist .vcard .vhead .vsys {
-color: #3a3e4a;
-}
-.v .vlist .vcard .vh .vmeta .vat {
-color: #638fd5;
-}
-.v .vlist .vcard .vhead .vnick {
-color: #6ba1ff;
-}
-.v a {
-color: #8696b1;
-}
-.v .vlist .vcard .vhead .vnick:hover {
-color: #669bfc;
-}
+    .v * {
+        color: #698fca;
+    }
+
+    .v .vlist .vcard .vhead .vsys {
+        color: #3a3e4a;
+    }
+
+    .v .vlist .vcard .vh .vmeta .vat {
+        color: #638fd5;
+    }
+
+    .v .vlist .vcard .vhead .vnick {
+        color: #6ba1ff;
+    }
+
+    .v a {
+        color: #8696b1;
+    }
+
+    .v .vlist .vcard .vhead .vnick:hover {
+        color: #669bfc;
+    }
 </style>
+
+<div id="musicMouseDrag" style="position:fixed; z-index: 9999; bottom: 0; right: 0;">
+    <div id="musicDragArea"
+        style="position: absolute; top: 0; left: 0; width: 100%;height: 10px;cursor: move; z-index: 10;"></div>
+    <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86
+        src="//music.163.com/outchain/player?type=2&id=1416174014&auto=0&height=66"></iframe>
+</div>
+
+<script>
+    var $DOC = $(document)
+    $('#musicMouseDrag').on('mousedown', function (e) {
+        // ??????
+        $DOC.bind("selectstart", function () {
+            return false;
+        });
+        $('#musicDragArea').css('height', '100%');
+        var $moveTarget = $('#musicMouseDrag');
+        $moveTarget.css('border', '1px dashed grey')
+        var div_x = e.pageX - $moveTarget.offset().left;
+        var div_y = e.pageY - $moveTarget.offset().top;
+        $DOC.on('mousemove', function (e) {
+            var targetX = e.pageX - div_x;
+            var targetY = e.pageY - div_y;
+            targetX = targetX < 0 ? 0 : (targetX + $moveTarget.outerWidth() >= window.innerWidth) ?
+                window.innerWidth - $moveTarget.outerWidth() : targetX;
+            targetY = targetY < 0 ? 0 : (targetY + $moveTarget.outerHeight() >= window.innerHeight) ?
+                window.innerHeight - $moveTarget.outerHeight() : targetY;
+            $moveTarget.css({
+                'left': targetX + 'px',
+                'top': targetY + 'px',
+                'bottom': 'inherit',
+                'right': 'inherit'
+            })
+        }).on('mouseup', function () {
+            $DOC.unbind("selectstart");
+            $DOC.off('mousemove')
+            $DOC.off('mouseup')
+            $moveTarget.css('border', 'none')
+            $('#musicDragArea').css('height', '10px');
+        })
+    })
+</script>
     <script type="text/javascript" color="173,174,173" opacity='1' zIndex="-2" count="99" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js"></script>
 <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/assets/miku.model.json"},"display":{"position":"right","width":150,"height":300},"mobile":{"show":true},"log":false});</script></body>
 </html>
